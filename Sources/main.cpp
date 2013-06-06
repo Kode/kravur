@@ -12,15 +12,15 @@ static int round(float value) {
 }
 
 static void writeS16(std::ofstream& out, s16 value) {
-	out.put((value & 0xff00) >> 8);
 	out.put((value & 0xff) >> 0);
+	out.put((value & 0xff00) >> 8);
 }
 
 static void writeS32(std::ofstream& out, s32 value) {
-	out.put((value & 0xff000000) >> 24);
-	out.put((value & 0xff0000) >> 16);
-	out.put((value & 0xff00) >> 8);
 	out.put((value & 0xff) >> 0);
+	out.put((value & 0xff00) >> 8);
+	out.put((value & 0xff0000) >> 16);
+	out.put((value & 0xff000000) >> 24);
 }
 
 static void writeFloat(std::ofstream& out, float value) {
