@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <fstream>
 #ifdef SYS_WINDOWS
+#include "GetFontFile.h"
 #include <Windows.h>
 #endif
 
@@ -52,10 +53,19 @@ int main(int argc, char** argv) {
 		strcat(buf, argv[1]);
 		in = fopen(buf, "rb");
 		if (!in) {
+			char* displayName;
+			char* filename;
+			if (!GetFontFile(argv[1], &displayName, &filename)) {
+				printf("Error: unable to open input file: %s\n", argv[1]);
+				return 1;
+			}
+			in = fopen(filename, "rb");
+			if (!in) {
 #endif
 		printf("Error: unable to open input file: %s\n", argv[1]);
 		return 1;
 #ifdef SYS_WINDOWS
+			}
 		}
 #endif
 	}
