@@ -81,7 +81,7 @@ LONG GetNextNameValue(HKEY key, LPSTR subkey, LPSTR szName, LPSTR szData)
 
 	if (subkey && subkey[0] != 0)
 	{
-		retval = RegOpenKeyExA(key, subkey, 0, KEY_ALL_ACCESS, &hkey);
+		retval = RegOpenKeyExA(key, subkey, 0, KEY_READ, &hkey);
 		if (retval != ERROR_SUCCESS)
 		{
 			TRACE(_T("RegOpenKeyEx failed\n"));

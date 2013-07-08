@@ -55,11 +55,17 @@ int main(int argc, char** argv) {
 		if (!in) {
 			char* displayName;
 			char* filename;
-			if (!GetFontFile(argv[1], &displayName, &filename)) {
+			char font[1001];
+			strcpy(font, argv[1]);
+			strcat(font, " (TrueType)");
+			if (!GetFontFile(font, &displayName, &filename)) {
 				printf("Error: unable to open input file: %s\n", argv[1]);
 				return 1;
 			}
-			in = fopen(filename, "rb");
+			GetWindowsDirectoryA(buf, 1024);
+			strcat(buf, "\\fonts\\");
+			strcat(buf, filename);
+			in = fopen(buf, "rb");
 			if (!in) {
 #endif
 		printf("Error: unable to open input file: %s\n", argv[1]);
