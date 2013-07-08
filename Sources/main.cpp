@@ -2,6 +2,9 @@
 #include "stb_truetype.h"
 #include <stdio.h>
 #include <fstream>
+#ifdef SYS_WINDOWS
+#include <Windows.h>
+#endif
 
 typedef unsigned char u8;
 typedef short s16;
@@ -42,8 +45,19 @@ int main(int argc, char** argv) {
 
 	FILE* in = fopen(argv[1], "rb");
 	if (!in) {
+#ifdef SYS_WINDOWS
+		char buf[1024];
+		GetWindowsDirectoryA(buf, 1024);
+		strcat(buf, "\\fonts\\");
+		strcat(buf, argv[1]);
+		in = fopen(buf, "rb");
+		if (!in) {
+#endif
 		printf("Error: unable to open input file: %s\n", argv[1]);
 		return 1;
+#ifdef SYS_WINDOWS
+		}
+#endif
 	}
 
 	fseek(in, 0, SEEK_END);
