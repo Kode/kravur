@@ -113,7 +113,7 @@ int main(int argc, char** argv) {
 	lineGap = round(lineGap * scale);
 
 	std::ofstream out(argv[3], std::ios_base::binary);
-	writeS32(out, (int)size);
+	writeFloat(out, size);
 	writeS32(out, ascent);
 	writeS32(out, descent);
 	writeS32(out, lineGap);
