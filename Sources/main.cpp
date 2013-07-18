@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	float size = static_cast<float>(atoi(argv[2]));
+	float size = static_cast<float>(atof(argv[2]));
 
 	if (size <= 0) {
 		printf("Weird fontsize");
@@ -85,8 +85,8 @@ int main(int argc, char** argv) {
 	
 	fclose(in);
 
-	int width = 128;
-	int height = 64;
+	int width = 64;
+	int height = 32;
 	stbtt_bakedchar baked[256 - 32];
 
 	u8* pixels = nullptr;
