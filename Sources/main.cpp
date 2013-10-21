@@ -11,7 +11,7 @@ typedef unsigned char u8;
 typedef short s16;
 typedef int s32;
 
-static int round(float value) {
+static int roundi(float value) {
 	return (int)floorf(value + 0.5f);
 }
 
@@ -108,9 +108,9 @@ int main(int argc, char** argv) {
 	int lineGap;
 	stbtt_GetFontVMetrics(&info, &ascent, &descent, &lineGap);
 	float scale = stbtt_ScaleForPixelHeight(&info, size);
-	ascent = round(ascent * scale); // equals baseline
-	descent = round(descent * scale);
-	lineGap = round(lineGap * scale);
+	ascent = roundi(ascent * scale); // equals baseline
+	descent = roundi(descent * scale);
+	lineGap = roundi(lineGap * scale);
 
 	std::ofstream out(argv[3], std::ios_base::binary);
 	writeFloat(out, size);
