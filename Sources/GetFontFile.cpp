@@ -22,7 +22,6 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include "GetFontFile.h"
 #include "GetNameValue.h"
-#include "GetWinVer.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // GetFontFile
@@ -42,16 +41,7 @@ bool GetFontFile(char* lpszFontName, char** strDisplayName, char** strFontFile)
 	char szName[2 * MAX_PATH];
 	char szData[2 * MAX_PATH];
 
-	int nVersion;
-	CString strVersion;
-	GetWinVer(strVersion, &nVersion);
-	TRACE(_T("strVersion=%s\n"), strVersion);
-
-	char* strFont;
-	//if ((nVersion >= WNTFIRST) && (nVersion <= WNTLAST)) 
-		strFont = "Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts";
-	//else
-	//	strFont = "Software\\Microsoft\\Windows\\CurrentVersion\\Fonts";
+	char* strFont = "Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts";
 
 	*strFontFile = ""; //.Empty();
 
@@ -59,7 +49,7 @@ bool GetFontFile(char* lpszFontName, char** strDisplayName, char** strFontFile)
 
 	while (GetNextNameValue(HKEY_LOCAL_MACHINE, strFont, szName, szData) == ERROR_SUCCESS)
 	{
-		if (strnicmp(lpszFontName, szName, strlen(lpszFontName)) == 0)
+		if (_strnicmp(lpszFontName, szName, strlen(lpszFontName)) == 0)
 		{
 			TRACE(_T("found font\n"));
 			*strDisplayName = szName;

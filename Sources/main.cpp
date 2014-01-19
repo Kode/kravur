@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
 	while (status < 0) {
 		if (height < width) height *= 2;
 		else width *= 2;
-		delete pixels;
+		delete[] pixels;
 		pixels = new u8[width * height];
 		status = stbtt_BakeFontBitmap(data, 0, size, pixels, width, height, 32, 256 - 32, &baked[0]);
 	}
@@ -128,9 +128,24 @@ int main(int argc, char** argv) {
 	}
 	writeS32(out, width);
 	writeS32(out, height);
-	for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
-		out.put(pixels[y * width + x]);
-	}
+	do {
+		for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
+			out.put(pixels[y * width + x]);
+		}
+		width /= 2;
+		height /= 2;
+		u8* newPixels = new u8[width * height];
+		for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
+			int value = (int)pixels[y * 2 * width * 2 + x * 2]
+				+ (int)pixels[(y + 1) * 2 * width * 2 + x * 2]
+				+ (int)pixels[y * 2 * width * 2 + (x + 1) * 2]
+				+ (int)pixels[(y + 1) * 2 * width * 2 + (x + 1) * 2];
+			newPixels[y * width + x] = static_cast<u8>(value / 4);
+		}
+		delete[] pixels;
+		pixels = newPixels;
+	} while (width > 1 && height > 1);
+	delete[] pixels;
 
 	printf("Written %s.\n", argv[3]);
 
