@@ -137,9 +137,9 @@ int main(int argc, char** argv) {
 		u8* newPixels = new u8[width * height];
 		for (int y = 0; y < height; ++y) for (int x = 0; x < width; ++x) {
 			int value = (int)pixels[y * 2 * width * 2 + x * 2]
-				+ (int)pixels[(y + 1) * 2 * width * 2 + x * 2]
-				+ (int)pixels[y * 2 * width * 2 + (x + 1) * 2]
-				+ (int)pixels[(y + 1) * 2 * width * 2 + (x + 1) * 2];
+				+ (int)pixels[(y * 2 + 1) * width * 2 + x * 2]
+				+ (int)pixels[y * 2 * width * 2 + (x * 2 + 1)]
+				+ (int)pixels[(y * 2 + 1) * width * 2 + (x * 2 + 1)];
 			newPixels[y * width + x] = static_cast<u8>(value / 4);
 		}
 		delete[] pixels;
