@@ -82,14 +82,14 @@ int main(int argc, char** argv) {
 
 	u8* data = new u8[length];
 	fread(data, 1, length, in);
-	
+
 	fclose(in);
 
 	int width = 64;
 	int height = 32;
 	stbtt_bakedchar baked[256 - 32];
 
-	u8* pixels = nullptr;
+	u8* pixels = NULL;
 
 	int status = -1;
 	while (status < 0) {
@@ -99,10 +99,10 @@ int main(int argc, char** argv) {
 		pixels = new u8[width * height];
 		status = stbtt_BakeFontBitmap(data, 0, size, pixels, width, height, 32, 256 - 32, &baked[0]);
 	}
-	
+
 	stbtt_fontinfo info;
 	stbtt_InitFont(&info, data, 0);
-	
+
 	int ascent;
 	int descent;
 	int lineGap;
