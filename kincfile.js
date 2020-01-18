@@ -1,6 +1,7 @@
 var project = new Project('kravur');
 
-project.cmd = true;
+project.setCmd();
+project.kore = false;
 
 project.addExclude(".git/**");
 project.addExclude("build/**");
